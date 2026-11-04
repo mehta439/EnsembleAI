@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EnsembleAI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f7f8fb; --card: #ffffff; --ink: #1f2328; --muted: #57606a; --line: #d8dee4;
+    --accent: #4f46e5; --accent-soft: rgba(79,70,229,0.08); --red: #e5484d; --green: #30a46c;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0b1020; --card: #151b2e; --ink: #e6e8ef; --muted: #9aa3b5; --line: #2a3350;
+      --accent-soft: rgba(99,102,241,0.14);
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0b1020; --card: #151b2e; --ink: #e6e8ef; --muted: #9aa3b5; --line: #2a3350;
+    --accent-soft: rgba(99,102,241,0.14);
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font-family: Inter, ui-sans-serif, system-ui, sans-serif; }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 16px 48px; }
+  .hero { text-align: center; padding: 36px 0 10px; }
+  .hero h1 { font-size: clamp(2rem, 6vw, 2.8rem); font-weight: 800; margin: 0; letter-spacing: -0.02em; }
+  .hero .tag { font-size: 1.15rem; color: var(--muted); margin-top: 6px; }
+  .chips { margin-top: 14px; }
+  .chip { display: inline-block; padding: 5px 12px; margin: 3px; border-radius: 999px; font-size: 0.85rem; border: 1px solid var(--line); }
+  .banner { margin: 18px 0; padding: 12px 16px; border-radius: 12px; background: var(--accent-soft);
+            border: 1px solid rgba(99,102,241,0.4); font-size: 0.95rem; line-height: 1.45; }
+  .banner a { color: var(--accent); }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 16px; }
+  .pick { display: grid; grid-template-columns: 2fr 3fr; gap: 16px; }
+  @media (max-width: 760px) { .pick { grid-template-columns: 1fr; } }
+  .label { font-size: 0.85rem; font-weight: 600; color: var(--accent); margin-bottom: 8px; }
+  .demo-btn { display: block; width: 100%; text-align: left; padding: 11px 12px; margin-bottom: 8px; border-radius: 10px;
+              border: 1px solid var(--line); background: transparent; color: var(--ink); font: inherit; cursor: pointer; }
+  .demo-btn.active { background: var(--accent); border-color: var(--accent); color: white; }
+  .sections { margin-top: 10px; font-size: 0.92rem; color: var(--muted); }
+  audio { width: 100%; margin-top: 4px; }
+  .tabs { display: flex; gap: 6px; margin: 22px 0 14px; border-bottom: 1px solid var(--line); }
+  .tab { padding: 10px 14px; border: none; background: none; color: var(--muted); font: inherit; cursor: pointer;
+         border-bottom: 2px solid transparent; margin-bottom: -1px; }
+  .tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+  .verdict { border-radius: 14px; padding: 18px 20px; border: 1px solid; margin-bottom: 16px; }
+  .verdict.bad { background: rgba(229,72,77,0.08); border-color: rgba(229,72,77,0.45); }
+  .verdict.good { background: rgba(48,164,108,0.08); border-color: rgba(48,164,108,0.45); }
+  .verdict.neutral { background: rgba(139,148,158,0.10); border-color: rgba(139,148,158,0.5); }
+  .verdict .v-head { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; }
+  .verdict.bad .v-head { color: var(--red); } .verdict.good .v-head { color: var(--green); } .verdict.neutral .v-head { color: #8b949e; }
+  .verdict .v-line { font-size: 1.3rem; margin-top: 6px; line-height: 1.35; }
+  .verdict .v-note { font-size: 0.85rem; color: var(--muted); margin-top: 10px; }
+  .plot { width: 100%; border-radius: 12px; background: white; display: block; }
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px; }
+  @media (max-width: 760px) { .two { grid-template-columns: 1fr; } }
+  h3 { margin: 0 0 8px; font-size: 1.05rem; }
+  .md p { margin: 6px 0; line-height: 1.5; } .md ul, .md ol { padding-left: 20px; line-height: 1.5; }
+  details { margin-top: 16px; } summary { cursor: pointer; font-weight: 600; padding: 10px 0; }
+  .tablewrap { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.92rem; }
+  th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+  td.off { color: var(--red); font-weight: 600; }
+  select { width: 100%; padding: 10px 12px; border-radius: 10px; border: 1px solid var(--line); background: var(--card);
+           color: var(--ink); font: inherit; }
+  .muted { color: var(--muted); }
+  footer { text-align: center; color: var(--muted); font-size: 0.85rem; margin-top: 36px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="hero">
+    <h1>EnsembleAI</h1>
+    <div class="tag">Find out who in your ensemble is out of tune, and when.</div>
+    <div class="chips">
+      <span class="chip">Section isolation: Meta SAM Audio</span>
+      <span class="chip">Reasoning and rehearsal notes: Muse Spark</span>
+      <span class="chip">Tuning measured against the group, not a fixed A440</span>
+    </div>
+  </div>
+
+  <div class="banner"><b>Hosted demo:</b> these are real results from the full EnsembleAI pipeline, saved so this page works
+    without a GPU. To analyze your own recordings, run the full app from the Colab notebook in our
+    <a id="repo-link" href="#" target="_blank" rel="noopener">GitHub repo</a>.</div>
+
+  <div class="pick">
+    <div class="card">
+      <div class="label">Choose a demo recording</div>
+      <div id="demos"></div>
+      <div class="sections">Sections analyzed: <b id="sections"></b></div>
+    </div>
+    <div class="card">
+      <div class="label">Recording (first 15 seconds analyzed)</div>
+      <audio id="input-audio" controls preload="none"></audio>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" data-tab="report">Ensemble report</button>
+    <button class="tab" data-tab="ask">Ask the rehearsal assistant</button>
+  </div>
+
+  <section id="tab-report">
+    <div id="verdict"></div>
+    <img id="timeline" class="plot" alt="Timeline of each section's held notes; red bars are more than 15 cents off the group">
+    <div class="two">
+      <div class="card">
+        <h3>Hear the problem</h3>
+        <div id="worst-md" class="md"></div>
+        <audio id="worst-audio" controls preload="none"></audio>
+      </div>
+      <div class="card">
+        <h3>Rehearsal notes from Muse Spark</h3>
+        <div id="notes" class="md"></div>
+      </div>
+    </div>
+    <details class="card">
+      <summary>Every held note</summary>
+      <div class="tablewrap"><table>
+        <thead><tr><th>Section</th><th>Time</th><th>Note</th><th>Cents off</th><th>Status</th></tr></thead>
+        <tbody id="table"></tbody>
+      </table></div>
+    </details>
+  </section>
+
+  <section id="tab-ask" hidden>
+    <p><b>Muse Spark plans</b> which sections and passages to check, <b>runs EnsembleAI's measurement tools</b>, then
+      <b>answers from the measured results</b>. Pick a question that was asked of this recording:</p>
+    <select id="question"></select>
+    <div class="card" style="margin-top:14px">
+      <div id="plan" class="md"></div>
+      <div id="answer" class="md" style="margin-top:10px"></div>
+    </div>
+    <img id="qa-plot" class="plot" style="margin-top:14px" alt="Timeline of the sections Muse Spark checked">
+  </section>
+
+  <footer>Built for the Meta Global AI Developer Hackathon. Demo audio: Mozart Clarinet Quintet, 2. Larghetto, via Wikimedia
+    Commons (CC BY-SA 2.0), trimmed and, for the detuned demo, clarinet pitch-shifted +25 cents.</footer>
+</div>
+
+<script>
+  const REPO_URL = "#";   // <-- paste your GitHub repo link here
+  const ROOT = "demo_results";
+  const $ = id => document.getElementById(id);
+  function inline(t) {
+    return t.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+            .replace(/\*\*(.+?)\*\*/g, "<b>$1</b>").replace(/\*(.+?)\*/g, "<i>$1</i>");
+  }
+  function md(text) {           // small markdown renderer: paragraphs, bullet and numbered lists, bold, italics
+    const out = []; let list = null;
+    const close = () => { if (list) { out.push(`</${list}>`); list = null; } };
+    for (const raw of (text || "").split("\n")) {
+      const line = raw.trim();
+      let m;
+      if ((m = line.match(/^[-*•]\s+(.*)/))) { if (list !== "ul") { close(); out.push("<ul>"); list = "ul"; } out.push(`<li>${inline(m[1])}</li>`); }
+      else if ((m = line.match(/^\d+[.)]\s+(.*)/))) { if (list !== "ol") { close(); out.push("<ol>"); list = "ol"; } out.push(`<li>${inline(m[1])}</li>`); }
+      else if (!line) { close(); }
+      else { close(); out.push(`<p>${inline(line)}</p>`); }
+    }
+    close(); return out.join("");
+  }
+  let data = {}, current = null;
+  if (REPO_URL !== "#") $("repo-link").href = REPO_URL;
+
+  function showDemo(id) {
+    current = data[id];
+    const f = `${ROOT}/${id}`;
+    document.querySelectorAll(".demo-btn").forEach(b => b.classList.toggle("active", b.dataset.id === id));
+    $("sections").textContent = current.sections;
+    $("input-audio").src = `${f}/input.wav`;
+    $("verdict").innerHTML = current.verdict;
+    $("timeline").src = `${f}/timeline.png`;
+    $("worst-md").innerHTML = md(current.worst_md);
+    $("worst-audio").hidden = !current.has_worst;
+    if (current.has_worst) $("worst-audio").src = `${f}/worst.wav`;
+    $("notes").innerHTML = md(current.notes);
+    $("table").innerHTML = (current.table || []).map(r =>
+      `<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td><td>${(+r[3]).toFixed(1)}</td>` +
+      `<td class="${r[4] !== "ok" ? "off" : ""}">${r[4]}</td></tr>`).join("");
+    $("question").innerHTML = current.qa.map((q, i) => `<option value="${i}">${q.question}</option>`).join("");
+    showAnswer(0);
+  }
+
+  function showAnswer(i) {
+    const q = current.qa[i];
+    if (!q) { $("plan").innerHTML = "<span class='muted'>No questions saved for this recording.</span>"; return; }
+    $("plan").innerHTML = md(q.plan);
+    $("answer").innerHTML = md(q.answer);
+    $("qa-plot").src = `${ROOT}/${current.id}/${q.plot}`;
+  }
+
+  document.querySelectorAll(".tab").forEach(t => t.addEventListener("click", () => {
+    document.querySelectorAll(".tab").forEach(x => x.classList.toggle("active", x === t));
+    $("tab-report").hidden = t.dataset.tab !== "report";
+    $("tab-ask").hidden = t.dataset.tab !== "ask";
+  }));
+  $("question").addEventListener("change", e => showAnswer(+e.target.value));
+
+  (async () => {
+    try {
+      const manifest = await (await fetch(`${ROOT}/manifest.json`)).json();
+      for (const m of manifest) data[m.id] = await (await fetch(`${ROOT}/${m.id}/result.json`)).json();
+      $("demos").innerHTML = manifest.map(m =>
+        `<button class="demo-btn" data-id="${m.id}">${m.title}</button>`).join("");
+      document.querySelectorAll(".demo-btn").forEach(b => b.addEventListener("click", () => showDemo(b.dataset.id)));
+      showDemo(manifest[0].id);
+    } catch (e) {
+      $("verdict").innerHTML = "<div class='verdict neutral'><div class='v-head'>Demo data missing</div>" +
+        "<div class='v-line'>Upload the demo_results folder next to this page.</div></div>";
+    }
+  })();
+</script>
+</body>
+</html>
