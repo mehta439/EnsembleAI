@@ -7,9 +7,10 @@ When a band or orchestra sounds off, the director has to stop everyone and hunt 
 Built for the **Meta Global AI Developer Hackathon** (Indie track, *Build for Your World*).
 
 **Demo video:** <!-- YouTube/Loom link -->  
-**Live demo (Hugging Face Space):** <!-- Space link --> (replays real results from the full pipeline, so it runs without a GPU)
+   **Live demo (Hugging Face Space):** [huggingface.co/spaces/armaanmehta/EnsembleAI](https://huggingface.co/spaces/armaanmehta/EnsembleAI) (replays real results from the full pipeline, so it runs without a GPU)
 
-<!-- Add a screenshot of the ensemble report here: ![EnsembleAI report](screenshot.png) -->
+<img width="1090" height="910" alt="Screenshot 2026-11-04 at 5 28 16 PM" src="https://github.com/user-attachments/assets/c52fca86-a5cd-4a70-aacb-6357dd6ea3f8" />
+
 
 ## What it does
 
@@ -124,12 +125,13 @@ Never commit API keys or tokens.
 
 **Code:** MIT (see `LICENSE`).
 
-**Demo audio:** "Wolfgang Amadeus Mozart - Clarinet Quintet - 2. Larghetto" by <!-- Author from the file page -->, via [Wikimedia Commons](<!-- file page link -->), licensed [CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0/). Modified: trimmed to 15 seconds; for the detuned demo, the clarinet was isolated and pitch-shifted +25 cents. **Our derived audio clips are released under CC BY-SA 2.0.**
+**Demo audio:** Mozart, Clarinet Quintet in A major, K. 581, II. Larghetto, performed by William McColl (clarinet) with the Philadelphia String Quartet, via [Wikimedia Commons](PASTE-THE-WIKIMEDIA-PAGE-URL) (from the Al Goldstein collection, Pandora Music repository), licensed under the EFF Open Audio License, interchangeable with [CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0/). Modified: trimmed to 15 seconds; for the detuned demo, the clarinet was isolated and pitch-shifted +25 cents. **Our derived audio clips are released under CC BY-SA 2.0.**
 
 <!-- Add the same credit for the Mozart String Quartet K421 recording if it appears in the repo or video. -->
 
-**Duet recording:** performed by <!-- name(s) -->, used with permission.
+**Duet recording:** performed by Advai Govind and Adam Thomas, used with permission.
 
 ## Team
-
-<!-- Names and GitHub handles -->
+Armaan Mehta (mehta439)
+Advai Govind
+Hamza Mian
