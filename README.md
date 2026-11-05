@@ -6,7 +6,8 @@ When a band or orchestra sounds off, the director has to stop everyone and hunt 
 
 Built for the **Meta Global AI Developer Hackathon** (Indie track, *Build for Your World*).
 
-**Demo video:** <!-- YouTube/Loom link -->  
+**Demo video:** https://youtu.be/emTvKXUDUlA?is=g_SfvxfLuYLK0pP9
+
    **Live demo (Hugging Face Space):** [huggingface.co/spaces/armaanmehta/EnsembleAI](https://huggingface.co/spaces/armaanmehta/EnsembleAI) (replays real results from the full pipeline, so it runs without a GPU)
 
 <img width="1090" height="910" alt="Screenshot 2026-11-04 at 5 28 16 PM" src="https://github.com/user-attachments/assets/c52fca86-a5cd-4a70-aacb-6357dd6ea3f8" />
@@ -133,5 +134,7 @@ Never commit API keys or tokens.
 
 ## Team
 Armaan Mehta (mehta439)
-Advai Govind
-Hamza Mian
+
+Advai Govind (advaig)
+
+Hamza Mian (HamzaMian2333)
